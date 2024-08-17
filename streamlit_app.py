@@ -409,6 +409,14 @@ stretches = [
     },
 ]
 
+# Define default duration
+default_duration = 45
+
+# Update stretches dataset with default duration
+for stretch in stretches:
+    if 'duration' not in stretch:
+        stretch['duration'] = default_duration
+
 # Define the Matching Algorithm
 def match_stretches(user_input, sports_tags, stretches):
     matched_stretches = []
