@@ -407,10 +407,10 @@ default_duration = 45
 for stretch in stretches:
     if 'duration' not in stretch:
         stretch['duration'] = default_duration
+       
 # Define the Matching Algorithm
 def match_stretches(user_input, sports_tags, stretches):
-    matched_stretches_sport = []
-    matched_stretches_soreness = []
+    matched_stretches = []
     sport_info = sports_tags[user_input['sport']]
     
     # Calculate the number of stretches needed based on duration
@@ -420,31 +420,42 @@ def match_stretches(user_input, sports_tags, stretches):
     num_sport_based = num_stretches // 2
     num_soreness_based = num_stretches - num_sport_based
     
-    # Adjust matching based on sports attributes
+    # Match stretches based on sports injury areas
+    sport_based_stretches = []
     for stretch in stretches:
-        if (stretch['muscle_group'] in sport_info['injury_areas']
-            if len(matched_stretches_sport) < num_sport_based:
-                # Check if stretch difficulty matches user's flexibility level
-                if (stretch['difficulty'] == 'Easy' and user_input['flexibility_level'] == 'Beginner') or \
-                   (stretch['difficulty'] == 'Medium' and user_input['flexibility_level'] == 'Intermediate'):
-                    matched_stretches_sport.append(stretch)
-    
-    # Adjust matching based on soreness points
+        # Ensure the stretch difficulty matches the user's flexibility level
+        if (stretch['difficulty'] == 'Easy' and user_input['flexibility_level'] == 'Beginner') or \
+           (stretch['difficulty'] == 'Medium' and user_input['flexibility_level'] == 'Intermediate'):
+            
+            # Check if the stretch's muscle group matches the sport's injury areas
+            if stretch['muscle_group'] in sport_info['injury_areas']:
+                sport_based_stretches.append(stretch)
+        
+        if len(sport_based_stretches) >= num_sport_based:
+            break
+
+    # Match stretches based on soreness points
+    soreness_based_stretches = []
     soreness_points = set(user_input['soreness'])
     for stretch in stretches:
-        if stretch['muscle_group'] in soreness_points:
-            if len(matched_stretches_soreness) < num_soreness_based:
-                # Check if stretch difficulty matches user's flexibility level
-                if (stretch['difficulty'] == 'Easy' and user_input['flexibility_level'] == 'Beginner') or \
-                   (stretch['difficulty'] == 'Medium' and user_input['flexibility_level'] == 'Intermediate'):
-                    matched_stretches_soreness.append(stretch)
+        # Ensure the stretch difficulty matches the user's flexibility level
+        if (stretch['difficulty'] == 'Easy' and user_input['flexibility_level'] == 'Beginner') or \
+           (stretch['difficulty'] == 'Medium' and user_input['flexibility_level'] == 'Intermediate'):
+            
+            # Check if the stretch's muscle group matches the soreness points
+            if stretch['muscle_group'] in soreness_points:
+                soreness_based_stretches.append(stretch)
+        
+        if len(soreness_based_stretches) >= num_soreness_based:
+            break
+
     # Combine results
-    final_recommendations = matched_stretches_sport + matched_stretches_soreness
+    final_recommendations = sport_based_stretches + soreness_based_stretches
     
-    # If not enough stretches are found, add additional stretches from the combined list
+    # If not enough stretches are found, add additional stretches from the remaining list
     if len(final_recommendations) < num_stretches:
-        additional_stretches_needed = num_stretches - len(final_recommendations)
         remaining_stretches = [stretch for stretch in stretches if stretch not in final_recommendations]
+        additional_stretches_needed = num_stretches - len(final_recommendations)
         final_recommendations.extend(remaining_stretches[:additional_stretches_needed])
     
     return final_recommendations
