@@ -425,12 +425,19 @@ def match_stretches(user_input, sports_tags, stretches):
     # Calculate the number of stretches needed based on duration
     num_stretches = user_input['duration'] * 60 // 45
     
-    # Match based on sport's common injury areas and needed stretches
+    # Adjust matching based on soreness points
+    soreness_points = set(user_input['soreness'])
+    
     for stretch in stretches:
         if (stretch['muscle_group'] in sport_info['injury_areas'] or
             stretch['type'] in sport_info['needed_stretches'] or
-            stretch['muscle_group'] in user_input['soreness']):
-            matched_stretches.append(stretch)
+            stretch['muscle_group'] in soreness_points):
+            
+            # Check if stretch difficulty matches user's flexibility level
+            if (stretch['difficulty'] == 'Easy' and user_input['flexibility_level'] in ['Intermediate', 'Advanced']) or \
+               (stretch['difficulty'] == 'Medium' and user_input['flexibility_level'] == 'Intermediate') or \
+               (stretch['difficulty'] == 'Hard' and user_input['flexibility_level'] == 'Advanced'):
+                matched_stretches.append(stretch)
         
         if len(matched_stretches) >= num_stretches:
             break
