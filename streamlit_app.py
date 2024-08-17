@@ -6,6 +6,36 @@ st.title("Fitness Stretch Recommendation App")
 # Description
 st.write("This app recommends stretches based on different attributes like muscle group, difficulty, and type.")
 
+# 1. Define the Sports and Flexibility Tags
+sports_tags = {
+    'Running': {
+        'injury_areas': ['Hamstrings', 'Calves', 'Knees'],
+        'needed_stretches': ['Flexibility', 'Mobility']
+    },
+    'Soccer': {
+        'injury_areas': ['Groin', 'Hamstrings', 'Ankles'],
+        'needed_stretches': ['Flexibility', 'Stability']
+    },
+    'Basketball': {
+        'injury_areas': ['Knees', 'Ankles', 'Quads'],
+        'needed_stretches': ['Mobility', 'Stability']
+    },
+    'Swimming': {
+        'injury_areas': ['Shoulders', 'Back', 'Ankles'],
+        'needed_stretches': ['Flexibility', 'Mobility']
+    },
+    'Generic': {
+        'injury_areas': ['Full Body'],
+        'needed_stretches': ['Flexibility']
+    }
+}
+
+flexibility_levels = {
+    'Beginner': 'Cannot touch toes, limited range of motion',
+    'Intermediate': 'Can touch toes, moderate range of motion',
+    'Advanced': 'Can touch palms to the floor, full range of motion'
+}
+
 # Define the dataset
 stretches = [
  # 1-5: Neck and Shoulders
@@ -378,4 +408,37 @@ stretches = [
     },
 ]
 
-# Further code for matching algorithm and other functionalities will go here...
+# 3. Example User Input (This will later be replaced by Streamlit input widgets)
+user_input = {
+    'sport': 'Running',  # Sport selected by the user
+    'flexibility_level': 'Intermediate',  # User's flexibility level
+    'soreness': ['Hamstrings', 'Back'],  # Areas where the user is commonly sore
+    'duration': 15  # Duration the user wants to stretch, in minutes
+}
+
+# 4. Define the Matching Algorithm
+def match_stretches(user_input, sports_tags, stretches):
+    matched_stretches = []
+    sport_info = sports_tags[user_input['sport']]
+    
+    # Calculate the number of stretches needed based on duration
+    num_stretches = user_input['duration'] * 60 // 45
+    
+    # Match based on sport's common injury areas and needed stretches
+    for stretch in stretches:
+        if (stretch['muscle_group'] in sport_info['injury_areas'] or
+            stretch['type'] in sport_info['needed_stretches'] or
+            stretch['muscle_group'] in user_input['soreness']):
+            matched_stretches.append(stretch)
+        
+        if len(matched_stretches) >= num_stretches:
+            break
+    
+    return matched_stretches
+
+# 5. Call the Matching Function
+result = match_stretches(user_input, sports_tags, stretches)
+
+# 6. Display the Matched Stretches (For now, just print them; later, use Streamlit to display)
+for stretch in result:
+    print(stretch)
