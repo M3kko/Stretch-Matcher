@@ -463,4 +463,4 @@ result = match_stretches(user_input, sports_tags, stretches)
 # Display the Matched Stretches
 st.subheader('Recommended Stretches')
 for stretch in result:
-    st.write(f"**{stretch['name']}** - Muscle Group: {stretch['muscle_group']}, Difficulty: {stretch['difficulty']}, Type: {stretch['type']}, Duration: {stretch['duration']} seconds")
+    st.write(f"**{stretch['name']}** - Duration: {stretch['duration']} seconds")
