@@ -375,7 +375,7 @@ stretches = [
         'difficulty': 'Easy',
         'equipment': 'None',
         'type': 'Flexibility'
-    }
+    },
 ]
 
 # Example: Displaying the dataset as a table
