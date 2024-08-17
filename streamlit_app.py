@@ -333,13 +333,13 @@ stretches = [
         'equipment': 'None',
         'type': 'Flexibility'
     },
-   {
+    {
         'name': 'Bridge Pose',
         'muscle_group': 'Glutes',
         'difficulty': 'Medium',
         'equipment': 'None',
         'type': 'Flexibility'
-    }
+    },
       # 46-50: Lower Body Focus
     {
         'name': 'Standing IT Band Stretch',
