@@ -1,7 +1,7 @@
 import streamlit as st
 
 # Title of the Streamlit app
-st.title("Stretch Matching App")
+st.title("Fitness Stretch Recommendation App")
 
 # Description
 st.write("This app recommends stretches based on different attributes like muscle group, difficulty, and type.")
@@ -35,6 +35,7 @@ flexibility_levels = {
     'Intermediate': 'Can touch toes, moderate range of motion',
     'Advanced': 'Can touch palms to the floor, full range of motion'
 }
+
 
 # Define the dataset
 stretches = [
@@ -450,7 +451,6 @@ user_input = {
 
 # Call the matching function
 result = match_stretches(user_input, sports_tags, stretches)
-
 
 # Display the Matched Stretches
 st.subheader('Recommended Stretches')
