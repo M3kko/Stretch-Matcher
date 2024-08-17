@@ -7,31 +7,24 @@ st.write("This app is a Demo for maching stretches to user input, in an app the 
 sports_tags = {
    'Figure Skating': {
         'injury_areas': ['Ankles', 'Knees', 'Hips'],
-        'needed_stretches': ['Flexibility', 'Mobility']
     },
     'Hockey': {
         'injury_areas': ['Shoulders', 'Hips', 'Groin'],
-        'needed_stretches': ['Flexibility', 'Strength']
     },
   'Running': {
         'injury_areas': ['Hamstrings', 'Calves', 'Knees'],
-        'needed_stretches': ['Flexibility', 'Mobility']
     },
     'Soccer': {
         'injury_areas': ['Groin', 'Hamstrings', 'Ankles'],
-        'needed_stretches': ['Flexibility', 'Stability']
     },
     'Basketball': {
         'injury_areas': ['Knees', 'Ankles', 'Quads'],
-        'needed_stretches': ['Mobility', 'Stability']
     },
     'Swimming': {
         'injury_areas': ['Shoulders', 'Back', 'Ankles'],
-        'needed_stretches': ['Flexibility', 'Mobility']
     },
     'Generic': {
         'injury_areas': ['Full Body'],
-        'needed_stretches': ['Flexibility']
     }
 }
 flexibility_levels = {
