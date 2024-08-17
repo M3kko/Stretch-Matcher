@@ -1,7 +1,7 @@
 import streamlit as st
 
 # Title of the Streamlit app
-st.title("Fitness Stretch Recommendation App")
+st.title("Stretch Matching App")
 
 # Description
 st.write("This app recommends stretches based on different attributes like muscle group, difficulty, and type.")
