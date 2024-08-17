@@ -6,7 +6,7 @@ st.title("Fitness Stretch Recommendation App")
 # Description
 st.write("This app recommends stretches based on different attributes like muscle group, difficulty, and type.")
 
-# 1. Define the Sports and Flexibility Tags
+# Define the Sports and Flexibility Tags
 sports_tags = {
     'Running': {
         'injury_areas': ['Hamstrings', 'Calves', 'Knees'],
@@ -408,15 +408,27 @@ stretches = [
     },
 ]
 
-# 3. Example User Input (This will later be replaced by Streamlit input widgets)
+# Sport Selection
+sport = st.selectbox('Select your sport:', list(sports_tags.keys()))
+
+# Flexibility Level
+flexibility = st.selectbox('Select your flexibility level:', list(flexibility_levels.keys()))
+
+# Common Soreness Areas
+soreness = st.multiselect('Where are you commonly sore?', ['Hamstrings', 'Back', 'Shoulders', 'Quads', 'Calves', 'Knees', 'Ankles', 'Groin', 'Full Body'])
+
+# Stretch Duration
+duration = st.slider('How long do you want to stretch for? (minutes)', min_value=5, max_value=60, value=15)
+
+# Prepare user input dictionary
 user_input = {
-    'sport': 'Running',  # Sport selected by the user
-    'flexibility_level': 'Intermediate',  # User's flexibility level
-    'soreness': ['Hamstrings', 'Back'],  # Areas where the user is commonly sore
-    'duration': 15  # Duration the user wants to stretch, in minutes
+    'sport': sport,
+    'flexibility_level': flexibility,
+    'soreness': soreness,
+    'duration': duration
 }
 
-# 4. Define the Matching Algorithm
+# Define the Matching Algorithm
 def match_stretches(user_input, sports_tags, stretches):
     matched_stretches = []
     sport_info = sports_tags[user_input['sport']]
@@ -436,8 +448,9 @@ def match_stretches(user_input, sports_tags, stretches):
     
     return matched_stretches
 
-# 5. Call the Matching Function
+# Call the matching function
 result = match_stretches(user_input, sports_tags, stretches)
+
 
 # Display the Matched Stretches
 st.subheader('Recommended Stretches')
