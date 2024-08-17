@@ -378,9 +378,4 @@ stretches = [
     },
 ]
 
-# Example: Displaying the dataset as a table
-if st.button('Show Stretches'):
-    for stretch in stretches:
-        st.write(stretch)
-
 # Further code for matching algorithm and other functionalities will go here...
