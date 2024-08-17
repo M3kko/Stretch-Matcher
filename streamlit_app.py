@@ -439,6 +439,7 @@ def match_stretches(user_input, sports_tags, stretches):
 # 5. Call the Matching Function
 result = match_stretches(user_input, sports_tags, stretches)
 
-# 6. Display the Matched Stretches (For now, just print them; later, use Streamlit to display)
+# Display the Matched Stretches
+st.subheader('Recommended Stretches')
 for stretch in result:
-    print(stretch)
+    st.write(f"**{stretch['name']}** - Muscle Group: {stretch['muscle_group']}, Difficulty: {stretch['difficulty']}, Type: {stretch['type']}, Duration: {stretch['duration']} seconds")
