@@ -438,8 +438,7 @@ def match_stretches(user_input, sports_tags, stretches):
     
     # Adjust matching based on sports attributes
     for stretch in stretches:
-        if (stretch['muscle_group'] in sport_info['injury_areas'] or
-            stretch['type'] in sport_info['needed_stretches']):
+        if (stretch['muscle_group'] in sport_info['injury_areas']):
             if len(matched_stretches_sport) < num_sport_based:
                 # Check if stretch difficulty matches user's flexibility level
                 if (stretch['difficulty'] == 'Easy' and user_input['flexibility_level'] == 'Beginner') or \
