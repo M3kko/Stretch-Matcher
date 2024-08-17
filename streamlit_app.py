@@ -1,10 +1,10 @@
 import streamlit as st
 
 # Title of the Streamlit app
-st.title("Fitness Stretch Recommendation App")
+st.title("Stretch Matching Demo")
 
 # Description
-st.write("This app recommends stretches based on different attributes like muscle group, difficulty, and type.")
+st.write("This app is a Demo for maching stretches to user input, in an app the stretches would obviously be pictures/videos rather than just text. Also this app uses a small dataset (only 50 stretches), and has limited attributes assigned to each sport and stretch.")
 
 # Define the Sports and Flexibility Tags
 sports_tags = {
