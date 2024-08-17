@@ -33,9 +33,7 @@ sports_tags = {
 flexibility_levels = {
     'Beginner': 'Cannot touch toes, limited range of motion',
     'Intermediate': 'Can touch toes, moderate range of motion',
-    'Advanced': 'Can touch palms to the floor, full range of motion'
 }
-
 
 # Define the dataset
 stretches = [
@@ -434,9 +432,8 @@ def match_stretches(user_input, sports_tags, stretches):
             stretch['muscle_group'] in soreness_points):
             
             # Check if stretch difficulty matches user's flexibility level
-            if (stretch['difficulty'] == 'Easy' and user_input['flexibility_level'] in ['Intermediate', 'Advanced']) or \
-               (stretch['difficulty'] == 'Medium' and user_input['flexibility_level'] == 'Intermediate') or \
-               (stretch['difficulty'] == 'Hard' and user_input['flexibility_level'] == 'Advanced'):
+            if (stretch['difficulty'] == 'Easy' and user_input['flexibility_level'] == 'Beginner') or \
+               (stretch['difficulty'] == 'Medium' and user_input['flexibility_level'] == 'Intermediate'):
                 matched_stretches.append(stretch)
         
         if len(matched_stretches) >= num_stretches:
