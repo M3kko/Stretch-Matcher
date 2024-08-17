@@ -6,27 +6,6 @@ st.title("Stretch Matching App")
 # Description
 st.write("This app recommends stretches based on different attributes like muscle group, difficulty, and type.")
 
-# Sport Selection
-sport = st.selectbox('Select your sport:', list(sports_tags.keys()))
-
-# Flexibility Level
-flexibility = st.selectbox('Select your flexibility level:', list(flexibility_levels.keys()))
-
-# Common Soreness Areas
-soreness = st.multiselect('Where are you commonly sore?', ['Hamstrings', 'Back', 'Shoulders', 'Quads', 'Calves', 'Knees', 'Ankles', 'Groin', 'Full Body'])
-
-# Stretch Duration
-duration = st.slider('How long do you want to stretch for? (minutes)', min_value=5, max_value=60, value=15)
-
-# Prepare user input dictionary
-user_input = {
-    'sport': sport,
-    'flexibility_level': flexibility,
-    'soreness': soreness,
-    'duration': duration
-}
-
-
 # Define the Sports and Flexibility Tags
 sports_tags = {
     'Running': {
@@ -449,7 +428,25 @@ def match_stretches(user_input, sports_tags, stretches):
     
     return matched_stretches
 
+# Sport Selection
+sport = st.selectbox('Select your sport:', list(sports_tags.keys()))
 
+# Flexibility Level
+flexibility = st.selectbox('Select your flexibility level:', list(flexibility_levels.keys()))
+
+# Common Soreness Areas
+soreness = st.multiselect('Where are you commonly sore?', ['Hamstrings', 'Back', 'Shoulders', 'Quads', 'Calves', 'Knees', 'Ankles', 'Groin', 'Full Body'])
+
+# Stretch Duration
+duration = st.slider('How long do you want to stretch for? (minutes)', min_value=5, max_value=60, value=15)
+
+# Prepare user input dictionary
+user_input = {
+    'sport': sport,
+    'flexibility_level': flexibility,
+    'soreness': soreness,
+    'duration': duration
+}
 
 # Call the matching function
 result = match_stretches(user_input, sports_tags, stretches)
