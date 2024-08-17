@@ -408,6 +408,26 @@ stretches = [
     },
 ]
 
+# Define the Matching Algorithm
+def match_stretches(user_input, sports_tags, stretches):
+    matched_stretches = []
+    sport_info = sports_tags[user_input['sport']]
+    
+    # Calculate the number of stretches needed based on duration
+    num_stretches = user_input['duration'] * 60 // 45
+    
+    # Match based on sport's common injury areas and needed stretches
+    for stretch in stretches:
+        if (stretch['muscle_group'] in sport_info['injury_areas'] or
+            stretch['type'] in sport_info['needed_stretches'] or
+            stretch['muscle_group'] in user_input['soreness']):
+            matched_stretches.append(stretch)
+        
+        if len(matched_stretches) >= num_stretches:
+            break
+    
+    return matched_stretches
+
 # Sport Selection
 sport = st.selectbox('Select your sport:', list(sports_tags.keys()))
 
@@ -428,25 +448,6 @@ user_input = {
     'duration': duration
 }
 
-# Define the Matching Algorithm
-def match_stretches(user_input, sports_tags, stretches):
-    matched_stretches = []
-    sport_info = sports_tags[user_input['sport']]
-    
-    # Calculate the number of stretches needed based on duration
-    num_stretches = user_input['duration'] * 60 // 45
-    
-    # Match based on sport's common injury areas and needed stretches
-    for stretch in stretches:
-        if (stretch['muscle_group'] in sport_info['injury_areas'] or
-            stretch['type'] in sport_info['needed_stretches'] or
-            stretch['muscle_group'] in user_input['soreness']):
-            matched_stretches.append(stretch)
-        
-        if len(matched_stretches) >= num_stretches:
-            break
-    
-    return matched_stretches
 
 # Call the matching function
 result = match_stretches(user_input, sports_tags, stretches)
