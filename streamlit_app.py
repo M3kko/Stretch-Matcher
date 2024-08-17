@@ -1,36 +1,48 @@
 import streamlit as st
+
 # Title of the Streamlit app
 st.title("Stretch Matching Demo")
+
 # Description
 st.write("This app is a Demo for maching stretches to user input, in an app the stretches would obviously be pictures/videos rather than just text. Also this app uses a small dataset (only 50 stretches), and has limited attributes assigned to each sport and stretch.")
+
 # Define the Sports and Flexibility Tags
 sports_tags = {
    'Figure Skating': {
         'injury_areas': ['Ankles', 'Knees', 'Hips'],
+        'needed_stretches': ['Flexibility', 'Mobility']
     },
     'Hockey': {
         'injury_areas': ['Shoulders', 'Hips', 'Groin'],
+        'needed_stretches': ['Flexibility', 'Strength']
     },
   'Running': {
         'injury_areas': ['Hamstrings', 'Calves', 'Knees'],
+        'needed_stretches': ['Flexibility', 'Mobility']
     },
     'Soccer': {
         'injury_areas': ['Groin', 'Hamstrings', 'Ankles'],
+        'needed_stretches': ['Flexibility', 'Stability']
     },
     'Basketball': {
         'injury_areas': ['Knees', 'Ankles', 'Quads'],
+        'needed_stretches': ['Mobility', 'Stability']
     },
     'Swimming': {
         'injury_areas': ['Shoulders', 'Back', 'Ankles'],
+        'needed_stretches': ['Flexibility', 'Mobility']
     },
     'Generic': {
         'injury_areas': ['Full Body'],
+        'needed_stretches': ['Flexibility']
     }
 }
+
 flexibility_levels = {
     'Beginner': 'Cannot touch toes, limited range of motion',
     'Intermediate': 'Can touch toes, moderate range of motion',
 }
+
 # Define the dataset
 stretches = [
  # 1-5: Neck and Shoulders
@@ -69,6 +81,7 @@ stretches = [
         'equipment': 'None',
         'type': 'Flexibility'
     },
+
     # 6-10: Chest and Upper Back
     {
         'name': 'Chest Opener Stretch',
@@ -105,6 +118,7 @@ stretches = [
         'equipment': 'None',
         'type': 'Flexibility'
     },
+
     # 11-15: Arms and Wrists
     {
         'name': 'Bicep Stretch',
@@ -141,6 +155,7 @@ stretches = [
         'equipment': 'Resistance Band',
         'type': 'Flexibility'
     },
+
     # 16-20: Core and Lower Back
     {
         'name': 'Seated Torso Twist',
@@ -177,6 +192,7 @@ stretches = [
         'equipment': 'None',
         'type': 'Flexibility'
     },
+
     # 21-25: Hips and Glutes
     {
         'name': 'Pigeon Pose',
@@ -213,6 +229,7 @@ stretches = [
         'equipment': 'None',
         'type': 'Mobility'
     },
+
     # 26-30: Quads and Hamstrings
     {
         'name': 'Standing Quad Stretch',
@@ -249,6 +266,7 @@ stretches = [
         'equipment': 'None',
         'type': 'Flexibility'
     },
+
     # 31-35: Calves and Feet
     {
         'name': 'Standing Calf Stretch',
@@ -285,6 +303,7 @@ stretches = [
         'equipment': 'None',
         'type': 'Flexibility'
     },
+
     # 36-40: Full Body and Dynamic Stretches
     {
         'name': 'Standing Side Bend',
@@ -321,6 +340,7 @@ stretches = [
         'equipment': 'None',
         'type': 'Mobility'
     },
+
     # 41-45: Hamstrings and Glutes
     {
         'name': 'Standing Hamstring Stretch',
@@ -394,13 +414,15 @@ stretches = [
         'type': 'Flexibility'
     },
 ]
+
 # Define default duration
 default_duration = 45
+
 # Update stretches dataset with default duration
 for stretch in stretches:
     if 'duration' not in stretch:
         stretch['duration'] = default_duration
-       
+
 # Define the Matching Algorithm
 def match_stretches(user_input, sports_tags, stretches):
     matched_stretches_sport = []
@@ -414,9 +436,10 @@ def match_stretches(user_input, sports_tags, stretches):
     num_sport_based = num_stretches // 2
     num_soreness_based = num_stretches - num_sport_based
     
-    # Adjust matching based on sports injury areas
+    # Adjust matching based on sports attributes
     for stretch in stretches:
-        if stretch['muscle_group'] in sport_info['injury_areas']:
+        if (stretch['muscle_group'] in sport_info['injury_areas'] or
+            stretch['type'] in sport_info['needed_stretches']):
             if len(matched_stretches_sport) < num_sport_based:
                 # Check if stretch difficulty matches user's flexibility level
                 if (stretch['difficulty'] == 'Easy' and user_input['flexibility_level'] == 'Beginner') or \
@@ -432,7 +455,7 @@ def match_stretches(user_input, sports_tags, stretches):
                 if (stretch['difficulty'] == 'Easy' and user_input['flexibility_level'] == 'Beginner') or \
                    (stretch['difficulty'] == 'Medium' and user_input['flexibility_level'] == 'Intermediate'):
                     matched_stretches_soreness.append(stretch)
-    
+
     # Combine results
     final_recommendations = matched_stretches_sport + matched_stretches_soreness
     
@@ -443,16 +466,16 @@ def match_stretches(user_input, sports_tags, stretches):
         final_recommendations.extend(remaining_stretches[:additional_stretches_needed])
     
     return final_recommendations
-
 # Sport Selection
 sport = st.selectbox('Select your sport:', list(sports_tags.keys()))
+
 # Flexibility Level
 flexibility = st.selectbox('Select your flexibility level:', list(flexibility_levels.keys()))
+
 # Common Soreness Areas
 soreness = st.multiselect('Where are you commonly sore?', ['Hamstrings', 'Back', 'Shoulders', 'Quads', 'Calves', 'Knees', 'Ankles', 'Groin', 'Full Body'])
 
 # Stretch Duration
-duration = st.slider('How long do you want to stretch for? (minutes)', min_value=5, max_value=60, value=15)
 duration = st.slider('How long do you want to stretch for? (minutes)', min_value=5, max_value=15, value=5)
 
 # Prepare user input dictionary
@@ -462,8 +485,10 @@ user_input = {
     'soreness': soreness,
     'duration': duration
 }
+
 # Call the matching function
 result = match_stretches(user_input, sports_tags, stretches)
+
 # Display the Matched Stretches
 st.subheader('Recommended Stretches')
 for stretch in result:
