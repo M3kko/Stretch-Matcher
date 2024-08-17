@@ -476,7 +476,7 @@ flexibility = st.selectbox('Select your flexibility level:', list(flexibility_le
 soreness = st.multiselect('Where are you commonly sore?', ['Hamstrings', 'Back', 'Shoulders', 'Quads', 'Calves', 'Knees', 'Ankles', 'Groin', 'Full Body'])
 
 # Stretch Duration
-duration = st.slider('How long do you want to stretch for? (minutes)', min_value=5, max_value=60, value=15)
+duration = st.slider('How long do you want to stretch for? (minutes)', min_value=5, max_value=15, value=5)
 
 # Prepare user input dictionary
 user_input = {
